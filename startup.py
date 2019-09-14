@@ -75,6 +75,8 @@ class Zabbix(Component):
         execute(f'dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
         execute('apt update')
         execute('apt install zabbix-agent -y')
+        host = self.get_input('specify zabbix server host')
+        execute(f"sed -i 's/127.0.0.1/{host}/g' /etc/zabbix/zabbix_agentd.conf")
 
     def run(self):
         execute('service zabbix-agent start')
