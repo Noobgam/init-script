@@ -120,7 +120,7 @@ class VNC(Component):
         pass
 
     def run(self):
-        pass:
+        pass
 
     def descr(self):
         return '''TightVNC server

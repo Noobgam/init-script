@@ -168,9 +168,9 @@ if [ ! -f ${CONFIGFILE} ]; then
 
     case "${SYSTEM_TYPE}" in
         "Linux")
-          echo "alias ll='ls -alF'"
-          echo "alias la='ls -A'"
-          echo "alias l='ls -CF'"
+          echo "alias ll='ls -alF --color=auto'"
+          echo "alias la='ls -A --color=auto'"
+          echo "alias l='ls -CF --color=auto'"
           echo "alias ps_mem='sudo ps_mem'"
           # default tmux ruins vim color schemas
           echo "alias tmux='tmux -2'"
