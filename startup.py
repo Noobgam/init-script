@@ -19,7 +19,7 @@ class Component():
 
     # when installation requires user to specify something (e.g. host / port)
     def get_input(self, msg):
-        return input("[INPUT {self.name}] {msg}:")
+        return input(f"[INPUT {self.name}] {msg}:")
 
 
     def run(self):
@@ -71,8 +71,8 @@ class Zabbix(Component):
         Component.install(self)
         distr = distro.linux_distribution()        
         distrname = distr[-1]
-        execute('wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{distrname}_all.deb')
-        execute('dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
+        execute(f'wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{distrname}_all.deb')
+        execute(f'dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
         execute('apt update')
         execute('apt install zabbix-agent -y')
 
@@ -101,12 +101,12 @@ if __name__ == "__main__":
         for word in parsed:
             matches = [x for x in ALL_COMPONENTS if word in x.name]
             if len(matches) == 0:
-                print("[ERROR] Don't know what to do with {word}")
+                print(f"[ERROR] Don't know what to do with {word}")
                 error = True
                 break
             elif len(matches) > 1:
                 matchNames = list(map(lambda x : x.name, matches))
-                print('[ERROR] Conflicting components found, which of {matchNames} do you want to install?')
+                print(f'[ERROR] Conflicting components found, which of {matchNames} do you want to install?')
                 error = True
                 break
 
