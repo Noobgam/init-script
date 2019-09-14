@@ -5,7 +5,7 @@ Requires root access to create an account named 'noobgam'
 
 To run:
 ```
-sudo bash < <(curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh)
+FILE=`mktemp` curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh > FILE && sudo bash FIL
 ```
 
 # content

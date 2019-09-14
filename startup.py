@@ -121,6 +121,6 @@ if __name__ == "__main__":
             for comp in comps:
                 deps = deps.union(comp.dep_pkgs())
 
-            execute('apt install {}'.format(' '.join(deps)))
+            execute('apt install {} -y'.format(' '.join(deps)))
             break
 
