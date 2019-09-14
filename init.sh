@@ -30,7 +30,7 @@ if [ $ret -eq 0 ]; then
   echo "[Warn] user '$USER' already exists"
 else
   adduser --disabled-password --gecos "" $USER
-  echo 'noobgam	ALL=(ALL:ALL) ALL' | tee -a '/etc/sudoers'
+  echo $USER'	ALL=NOPASSWD:ALL' | tee -a '/etc/sudoers'
 fi
 unset ret
 
