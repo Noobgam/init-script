@@ -74,7 +74,7 @@ class Zabbix(Component):
         execute('wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{distrname}_all.deb')
         execute('dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
         execute('apt update')
-        execute('apt install zabbix-agent')
+        execute('apt install zabbix-agent -y')
 
     def run(self):
         execute('service zabbix-agent start')
@@ -122,5 +122,7 @@ if __name__ == "__main__":
                 deps = deps.union(comp.dep_pkgs())
 
             execute('apt install {} -y'.format(' '.join(deps)))
+            for comp in comps:
+                comp.install()
             break
 
