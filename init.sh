@@ -83,7 +83,7 @@ echo "[INFO] Initialized VIM"
 
 echo "[INFO] Installing pip3 packages"
 
-pip3 install distro
+pip3 install distro ps_mem
 
 echo "[INFO] Running interactive startup procedure"
 

@@ -171,6 +171,7 @@ if [ ! -f ${CONFIGFILE} ]; then
           echo "alias ll='ls -alF'"
           echo "alias la='ls -A'"
           echo "alias l='ls -CF'"
+          echo "alias ps_mem='sudo ps_mem'"
           # default tmux ruins vim color schemas
           echo "alias tmux='tmux -2'"
           ;;
