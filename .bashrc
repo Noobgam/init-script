@@ -205,7 +205,7 @@ OATH_TOKEN_ENABLED=0
 UPDATE_BASHRC=1      # Controls the automatic update process
 UPDATE_DIRCOLORS=1   # Determines whether to update .dir_colors from github
 LINE_ENABLED=1       # Comment this line to disable the horizontal line above the prompt
-GIT_ENABLED=1        # Determines if the current git branch is displayed in git repositories
+GIT_ENABLED=0        # Determines if the current git branch is displayed in git repositories
 ENDOFCONFIGFILE
 
     # Return stdout to fd 1
