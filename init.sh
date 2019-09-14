@@ -8,7 +8,7 @@ dl_file ()
     URL="${1}"
     LOCALFILENAME="${2}"
     TEMPFILE=$(mktemp /tmp/tmp.XXXXXX)
-    wget --no-check-certificate -qO${TEMPFILE} ${URL} 2>/dev/null && mv ${TEMPFILE} ${LOCALFILENAME}
+    sudo wget --no-check-certificate -qO${TEMPFILE} ${URL} 2>/dev/null && sudo mv ${TEMPFILE} ${LOCALFILENAME}
 }
 
 set -e
@@ -20,6 +20,7 @@ USER='noobgam'
 ret=0
 sudo getent passwd $USER > /dev/null 2>&1 || ret=$?
 if [ $ret -eq 0 ]; then
+  echo "[Warn] user '$USER' already exists"
 else
   sudo adduser --disabled-password --gecos "" $USER
 fi
@@ -52,11 +53,12 @@ sudo mkdir -p $USER_HOME/.vim/autoload
 
 sudo mv $CLONED_PATH/.vimrc $USER_HOME
 
-sudo dl_file $ONEDARK_REPO'/colors/onedark.vim' $USER_HOME/.vim/colors/onedark.vim
-sudo dl_file $ONEDARK_REPO'/autoload/onedark.vim' $USER_HOME/.vim/autoload/onedark.vim
-
-sudo cat $CLONED_PATH/ssh_public/* >> $USER_HOME/.ssh/authorized_keys
+dl_file $ONEDARK_REPO'/colors/onedark.vim' $USER_HOME/.vim/colors/onedark.vim
+dl_file $ONEDARK_REPO'/autoload/onedark.vim' $USER_HOME/.vim/autoload/onedark.vim
+sudo mv $CLONED_PATH/.ssh/authorized_keys $USER_HOME/.ssh/authorized_keys
 
 sudo rm -rf CLONED_PATH
+sudo chown -R noobgam:noobgam $USER_HOME
+sudo chmod 600 $USER_HOME/.ssh/authorized_keys
 
 unset -f dl_file
