@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Mostly tested for Ubuntu since I don't use other OS'es
 # But doesn't contain as much OS-dependant stuff
@@ -8,21 +8,28 @@ dl_file ()
     URL="${1}"
     LOCALFILENAME="${2}"
     TEMPFILE=$(mktemp /tmp/tmp.XXXXXX)
-    sudo wget --no-check-certificate -qO${TEMPFILE} ${URL} 2>/dev/null && sudo mv ${TEMPFILE} ${LOCALFILENAME}
+    wget --no-check-certificate -qO${TEMPFILE} ${URL} 2>/dev/null && mv ${TEMPFILE} ${LOCALFILENAME}
 }
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
 
 set -e
 
-sudo apt-get update
+
+apt-get update
 
 USER='noobgam'
 
 ret=0
-sudo getent passwd $USER > /dev/null 2>&1 || ret=$?
+getent passwd $USER > /dev/null 2>&1 || ret=$?
 if [ $ret -eq 0 ]; then
   echo "[Warn] user '$USER' already exists"
 else
-  sudo adduser --disabled-password --gecos "" $USER
+  adduser --disabled-password --gecos "" $USER
+  echo 'noobgam	ALL=(ALL:ALL) ALL' | tee -a '/etc/sudoers'
 fi
 unset ret
 
@@ -34,7 +41,7 @@ GIT_PATH='https://github.com/Noobgam/init-script.git'
 ONEDARK_REPO='https://raw.githubusercontent.com/joshdick/onedark.vim/master'
 
 if ! dpkg -s $MANDATORY_PKGS >/dev/null 2>&1; then
-  sudo apt-get install $MANDATORY_PKGS -y
+  apt-get install $MANDATORY_PKGS -y
 fi
 
 CLONED_PATH=$(mktemp -d)
@@ -42,27 +49,27 @@ CLONED_PATH=$(mktemp -d)
 ### start background git clone ###
 echo "[INFO] Checking out projects"
 
-sudo mkdir -p $USER_HOME/.vim/pack/default/start
-sudo git clone 'https://github.com/sheerun/vim-polyglot' $USER_HOME/.vim/pack/default/start/vim-polyglot >/dev/null 2>&1 &
+mkdir -p $USER_HOME/.vim/pack/default/start
+git clone 'https://github.com/sheerun/vim-polyglot' $USER_HOME/.vim/pack/default/start/vim-polyglot >/dev/null 2>&1 &
 
-sudo git clone $GIT_PATH $CLONED_PATH >/dev/null 2>&1
+git clone $GIT_PATH $CLONED_PATH >/dev/null 2>&1
 
 ### INITIALIZE USER ###
 
-sudo mv $CLONED_PATH/.bashrc $USER_HOME
-sudo mkdir -p $USER_HOME/.ssh
+mv $CLONED_PATH/.bashrc $USER_HOME
+mkdir -p $USER_HOME/.ssh
 
 # do not overwrite, because user could have existed already.
-sudo cat $CLONED_PATH/.ssh/authorized_keys | sudo tee -a $USER_HOME/.ssh/authorized_keys >/dev/null 2>&1
+cat $CLONED_PATH/.ssh/authorized_keys | tee -a $USER_HOME/.ssh/authorized_keys >/dev/null 2>&1
 
 echo "[INFO] Initialized user"
 
 ### VIM ###
 
-sudo mkdir -p $USER_HOME/.vim/colors
-sudo mkdir -p $USER_HOME/.vim/autoload
+mkdir -p $USER_HOME/.vim/colors
+mkdir -p $USER_HOME/.vim/autoload
 
-sudo mv $CLONED_PATH/.vimrc $USER_HOME
+mv $CLONED_PATH/.vimrc $USER_HOME
 
 dl_file $ONEDARK_REPO'/colors/onedark.vim' $USER_HOME/.vim/colors/onedark.vim
 dl_file $ONEDARK_REPO'/autoload/onedark.vim' $USER_HOME/.vim/autoload/onedark.vim
@@ -73,10 +80,15 @@ echo "[INFO] Initialized VIM"
 
 ### CLEANUP ###
 
-sudo rm -rf CLONED_PATH
-sudo chown -R noobgam:noobgam $USER_HOME
-sudo chmod 600 $USER_HOME/.ssh/authorized_keys
+echo "[INFO] Running interactive startup procedure"
+
+python3 $CLONED_PATH/startup.py
+
+rm -rf CLONED_PATH
+chown -R noobgam:noobgam $USER_HOME
+chmod 600 $USER_HOME/.ssh/authorized_keys
 
 echo "[SUCCESS] Cleanup OK"
+
 
 unset -f dl_file
