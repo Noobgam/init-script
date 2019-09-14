@@ -81,6 +81,10 @@ class Zabbix(Component):
         execute(f'dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
         execute('apt update')
         execute('apt install zabbix-agent -y')
+
+        # This is really odd that I have to stop it when I haven't even started it.
+        # but it crashes badly otherwise
+        execute('service zabbix-agent stop')
         cfg = env.get_template('configs/zabbix_agentd.conf.jinja')
 
         hostlist = self.get_input('specify zabbix server hosts')
