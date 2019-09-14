@@ -1,4 +1,6 @@
 import os, platform, distro
+import sys
+from jinja2 import Environment, FileSystemLoader
 
 def execute(cmd):
     print('[INFO] Executing ' + cmd)
@@ -68,6 +70,10 @@ class Zabbix(Component):
         return []    
         
     def install(self):
+        global workdir
+        file_loader = FileSystemLoader(workdir)
+        env = Environment(loader = file_loader)
+
         Component.install(self)
         distr = distro.linux_distribution()        
         distrname = distr[-1]
@@ -75,8 +81,14 @@ class Zabbix(Component):
         execute(f'dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
         execute('apt update')
         execute('apt install zabbix-agent -y')
-        host = self.get_input('specify zabbix server host')
-        execute(f"sed -i 's/127.0.0.1/{host}/g' /etc/zabbix/zabbix_agentd.conf")
+        cfg = env.get_template('configs/zabbix_agentd.conf.jinja')
+
+        hostlist = self.get_input('specify zabbix server hosts')
+        hostname = self.get_input('specify zabbix server name')
+
+        f = open('/etc/zabbix/zabbix_agentd.conf', 'w')
+        f.write(cfg.render(hostlist=hostlist, hostname=hostname))
+        f.close()
 
     def run(self):
         execute('service zabbix-agent start')
@@ -92,6 +104,12 @@ if __name__ == "__main__":
     if (os.getuid() != 0):
         print('This script must be run as root')
         exit(1)
+    if len(sys.argv) > 1:
+        global workdir
+        workdir = sys.argv[1]
+    install = input("Want to install anything? y(Y)/n(N)")
+    if install in "nN":
+        exit(0)
     while True:
         print('Avaliable components:')
         for component in ALL_COMPONENTS:

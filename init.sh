@@ -83,11 +83,11 @@ echo "[INFO] Initialized VIM"
 
 echo "[INFO] Installing pip3 packages"
 
-pip3 install distro ps_mem
+pip3 install distro ps_mem jinja2
 
 echo "[INFO] Running interactive startup procedure"
 
-python3 $CLONED_PATH/startup.py
+python3 $CLONED_PATH/startup.py $CLONED_PATH
 
 rm -rf CLONED_PATH
 chown -R noobgam:noobgam $USER_HOME
