@@ -126,5 +126,7 @@ if __name__ == "__main__":
             execute('apt install {} -y'.format(' '.join(deps)))
             for comp in comps:
                 comp.install()
+            for comp in comps:
+                comp.run()
             break
 
