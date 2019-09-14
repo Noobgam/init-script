@@ -39,26 +39,44 @@ fi
 
 CLONED_PATH=$(mktemp -d)
 
-sudo git clone $GIT_PATH $CLONED_PATH
+### start background git clone ###
+echo "[INFO] Checking out projects"
+
+sudo mkdir -p $USER_HOME/.vim/pack/default/start
+sudo git clone 'https://github.com/sheerun/vim-polyglot' $USER_HOME/.vim/pack/default/start/vim-polyglot >/dev/null 2>&1 &
+
+sudo git clone $GIT_PATH $CLONED_PATH >/dev/null 2>&1
 
 ### INITIALIZE USER ###
 
 sudo mv $CLONED_PATH/.bashrc $USER_HOME
+sudo mkdir -p $USER_HOME/.ssh
+
+# do not overwrite, because user could have existed already.
+sudo cat $CLONED_PATH/.ssh/authorized_keys | sudo tee -a $USER_HOME/.ssh/authorized_keys >/dev/null 2>&1
+
+echo "[INFO] Initialized user"
 
 ### VIM ###
 
 sudo mkdir -p $USER_HOME/.vim/colors
-sudo mkdir -p $USER_HOME/.ssh
 sudo mkdir -p $USER_HOME/.vim/autoload
 
 sudo mv $CLONED_PATH/.vimrc $USER_HOME
 
 dl_file $ONEDARK_REPO'/colors/onedark.vim' $USER_HOME/.vim/colors/onedark.vim
 dl_file $ONEDARK_REPO'/autoload/onedark.vim' $USER_HOME/.vim/autoload/onedark.vim
-sudo mv $CLONED_PATH/.ssh/authorized_keys $USER_HOME/.ssh/authorized_keys
+# waits for git clone vim-polyglot
+wait
+
+echo "[INFO] Initialized VIM"
+
+### CLEANUP ###
 
 sudo rm -rf CLONED_PATH
 sudo chown -R noobgam:noobgam $USER_HOME
 sudo chmod 600 $USER_HOME/.ssh/authorized_keys
+
+echo "[SUCCESS] Cleanup OK"
 
 unset -f dl_file
