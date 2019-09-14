@@ -34,7 +34,7 @@ fi
 unset ret
 
 USER_HOME='/home/'$USER
-MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl'
+MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip'
 URL_PATH='https://raw.githubusercontent.com/Noobgam/init-script/master/'
 GIT_PATH='https://github.com/Noobgam/init-script.git'
 
@@ -79,6 +79,10 @@ wait
 echo "[INFO] Initialized VIM"
 
 ### CLEANUP ###
+
+echo "[INFO] Installing pip3 packages"
+
+pip3 install distro
 
 echo "[INFO] Running interactive startup procedure"
 
