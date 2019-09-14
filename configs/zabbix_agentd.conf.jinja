@@ -100,8 +100,6 @@ Server={{ hostlist }}
 # Mandatory: no
 # Range: 1024-32767
 # Default:
-
-ListenPort={{ port }}
 # ListenPort=10050
 
 ### Option: ListenIP
@@ -135,7 +133,7 @@ ListenPort={{ port }}
 # Default:
 # ServerActive=
 
-ServerActive={{ hostlist[0] }}
+ServerActive={{ hostlist }}
 
 ### Option: Hostname
 #       Unique, case sensitive hostname.
