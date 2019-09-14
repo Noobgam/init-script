@@ -96,9 +96,37 @@ class Zabbix(Component):
     def descr(self):
         return '''Zabbix agent
 used for monitoring purposes, requires zabbix server & frontend installed somewhere'''
-        
 
-ALL_COMPONENTS = [Docker(), Zabbix()]
+"""
+    Installs tightvnc on host
+"""
+class VNC(Component):
+    def __init__(self):
+        Component.__init__(self, 'VNC')
+
+    def dep_comps(slef):
+        return []
+
+    def dep_pkgs(self):
+        return [
+            'xserver-xorg-core', 'xserver-xorg-input-all', 'tightvncserver',
+            'xserver-xorg-video-fbdev', 'libx11-6', 'x11-common', 'x11-utils',
+            'x11-xkb-utils', 'x11-xserver-utils', 'xterm', 'lightdm',
+            'openbox', 'gnome-panel', 'gnome-settings-daemon',
+            'metacity', 'nautilus', 'gnome-terminal'
+        ]
+
+    def install(self):
+        pass
+
+    def run(self):
+        pass:
+
+    def descr(self):
+        return '''TightVNC server
+Used to connect to remote desktop, via non-ssh way'''
+
+ALL_COMPONENTS = [Docker(), Zabbix(), VNC()]
 
 if __name__ == "__main__":
     if (os.getuid() != 0):
