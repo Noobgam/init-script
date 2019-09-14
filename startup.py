@@ -2,7 +2,7 @@ import os, platform, distro
 
 def execute(cmd):
     print('[INFO] Executing ' + cmd)
-#    return os.system(cmd)    
+    return os.system(cmd)    
 
 class Component():
     def __init__(self, name):
