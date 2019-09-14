@@ -90,5 +90,4 @@ chmod 600 $USER_HOME/.ssh/authorized_keys
 
 echo "[SUCCESS] Cleanup OK"
 
-
 unset -f dl_file
