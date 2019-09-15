@@ -21,7 +21,7 @@ class Component():
 
     # when installation requires user to specify something (e.g. host / port)
     def get_input(self, msg):
-        return input(f"[INPUT {self.name}] {msg}:")
+        return input("[INPUT {}] {}:".format(self.name, msg))
 
 
     def run(self):
@@ -153,12 +153,12 @@ if __name__ == "__main__":
         for word in parsed:
             matches = [x for x in ALL_COMPONENTS if word in x.name]
             if len(matches) == 0:
-                print(f"[ERROR] Don't know what to do with {word}")
+                print("[ERROR] Don't know what to do with {}".format(word))
                 error = True
                 break
             elif len(matches) > 1:
                 matchNames = list(map(lambda x : x.name, matches))
-                print(f'[ERROR] Conflicting components found, which of {matchNames} do you want to install?')
+                print('[ERROR] Conflicting components found, which of {} do you want to install?'.format(matchNames))
                 error = True
                 break
 
