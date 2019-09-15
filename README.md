@@ -1,7 +1,7 @@
 ## init-script
 
 ```
-FILE=`mktemp` curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh > FILE && sudo bash FILE
+FILE=`mktemp` curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh > $FILE && sudo bash $FILE
 ```
 
 # content
