@@ -79,11 +79,19 @@ class Zabbix(Component):
         distrname = distr[-1]
         execute('wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{}_all.deb'.format(distrname))
         execute('dpkg -i zabbix-release_4.0-2+{}_all.deb'.format(distrname))
+
         execute('apt update')
+        # TODO(noobgam): install might fail for some odd reason
+        # due to the fact that zabbix starts on installation, which might fail due to permissions (even though sudo (?!))
+        # this is fixable by `mkdir -p /var/log/zabbix-agent && chown -c zabbix:zabbix /var/log/zabbix-agent
+        # yet I'm unsure how to handle this correctly at the time.
+        # perhaps the way to go is to ignore apt install failure and explicitly chown the folder.
+
         execute('apt install zabbix-agent -y')
 
-        # This is really odd that I have to stop it when I haven't even started it.
-        # but it crashes badly otherwise
+        # This is really odd that I have to stop it when I haven't even started it
+        # but it crashes badly otherwise if you start it second time without starting.
+
         execute('service zabbix-agent stop')
         cfg = env.get_template('configs/zabbix_agentd.conf.jinja')
 
