@@ -95,6 +95,14 @@ class Zabbix(Component):
         execute('service zabbix-agent stop')
         cfg = env.get_template('configs/zabbix_agentd.conf.jinja')
 
+        # TESTING:
+        #  see above
+
+        execute('mkdir -p /var/log/zabbix-agent')
+        execute('chown -c zabbix:zabbix /var/log/zabbix-agent')
+
+        # /TESTING
+
         hostlist = self.get_input('specify zabbix server hosts')
         hostname = self.get_input('specify zabbix server name')
 
