@@ -77,8 +77,8 @@ class Zabbix(Component):
         Component.install(self)
         distr = distro.linux_distribution()        
         distrname = distr[-1]
-        execute(f'wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{distrname}_all.deb')
-        execute(f'dpkg -i zabbix-release_4.0-2+{distrname}_all.deb')
+        execute('wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{}_all.deb'.format(distrname))
+        execute('dpkg -i zabbix-release_4.0-2+{}_all.deb'.format(distrname))
         execute('apt update')
         execute('apt install zabbix-agent -y')
 
