@@ -35,7 +35,7 @@ fi
 unset ret
 
 USER_HOME='/home/'$USER
-MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip net-tools netcat'
+MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip net-tools netcat lsof'
 URL_PATH='https://raw.githubusercontent.com/Noobgam/init-script/master/'
 GIT_PATH='https://github.com/Noobgam/init-script.git'
 
