@@ -202,6 +202,8 @@ OATH_TOKEN_ENABLED=0
 # Set the format for the date line
 #PROMPT_LINE_DATE_FORMAT="+%r"
 
+export VISUAL=vim
+export EDITOR=vim
 UPDATE_BASHRC=1      # Controls the automatic update process
 UPDATE_DIRCOLORS=1   # Determines whether to update .dir_colors from github
 LINE_ENABLED=1       # Comment this line to disable the horizontal line above the prompt
