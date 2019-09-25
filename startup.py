@@ -1,4 +1,4 @@
-import os, platform, distro
+import os, platform, distro, shutil
 import sys
 from jinja2 import Environment, FileSystemLoader
 
@@ -128,19 +128,22 @@ class VNC(Component):
         return []
 
     def dep_pkgs(self):
+        # I literally have no idea whatsoever which of these is necessary, but removal of most of them leads to undesired side effects.
         return [
             'xserver-xorg-core', 'xserver-xorg-input-all', 'tightvncserver',
             'xserver-xorg-video-fbdev', 'libx11-6', 'x11-common', 'x11-utils',
             'x11-xkb-utils', 'x11-xserver-utils', 'xterm', 'lightdm',
             'openbox', 'gnome-panel', 'gnome-settings-daemon',
-            'metacity', 'nautilus', 'gnome-terminal'
+            'metacity', 'nautilus', 'gnome-terminal', 'ubuntu-desktop'
         ]
 
     def install(self):
+        global workdir
+        shutil.copytree(os.path.join(workdir, '.vnc'), '/home/noobgam/.vnc')       
         pass
 
     def run(self):
-        pass
+        execute('tightvncserver -geometry 1920x1080')
 
     def descr(self):
         return '''TightVNC server
