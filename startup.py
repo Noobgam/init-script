@@ -140,7 +140,7 @@ class VNC(Component):
     def install(self):
         global workdir
         shutil.copytree(os.path.join(workdir, '.vnc'), '/home/noobgam/.vnc')
-        execute('chown -R noobgam:noobgam /home/noobgam/.vnc')
+        execute('chown -R noobgam:nogroup /home/noobgam/.vnc')
         execute('chmod +x /home/noobgam/.vnc/xstartup')
 
     def run(self):
