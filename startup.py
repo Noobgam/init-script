@@ -36,18 +36,7 @@ class Docker(Component):
 
     def install(self):
         Component.install(self)
-        distr = distro.linux_distribution()
-        distrname = distr[-1]
-        if distrname == "bionic":
-            execute('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
-            execute('''sudo add-apt-repository \
-"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) \
-stable"''')
-            execute('apt update')
-            execute('apt install docker-ce docker-ce-cli containerd.io -y')
-        else:
-            raise Exception('Other distros are not supported for now')
+        execute('curl -sSL https://get.docker.com | sh')
 
     def run(self):
         pass
@@ -70,11 +59,11 @@ class Zabbix(Component):
         return []    
         
     def install(self):
+        Component.install(self)
         global workdir
         file_loader = FileSystemLoader(workdir)
         env = Environment(loader = file_loader)
 
-        Component.install(self)
         distr = distro.linux_distribution()        
         distrname = distr[-1]
         execute('wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+{}_all.deb'.format(distrname))
