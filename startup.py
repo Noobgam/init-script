@@ -123,7 +123,8 @@ class VNC(Component):
             'xserver-xorg-video-fbdev', 'libx11-6', 'x11-common', 'x11-utils',
             'x11-xkb-utils', 'x11-xserver-utils', 'xterm', 'lightdm',
             'openbox', 'gnome-panel', 'gnome-settings-daemon',
-            'metacity', 'nautilus', 'gnome-terminal', 'ubuntu-desktop'
+            'metacity', 'nautilus', 'gnome-terminal', 'ubuntu-desktop',
+            'terminator'
         ]
 
     def install(self):
