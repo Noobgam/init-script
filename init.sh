@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xe
 
 # Mostly tested for Ubuntu since I don't use other OS'es
 # But doesn't contain as much OS-dependant stuff
@@ -40,8 +41,8 @@ GIT_PATH='https://github.com/Noobgam/init-script.git'
 
 ONEDARK_REPO='https://raw.githubusercontent.com/joshdick/onedark.vim/master'
 
-if ! dpkg -s "$MANDATORY_PKGS" >/dev/null 2>&1; then
-  apt-get install "$MANDATORY_PKGS" -y
+if ! dpkg -s $MANDATORY_PKGS >/dev/null 2>&1; then
+  apt-get install $MANDATORY_PKGS -y
 fi
 
 CLONED_PATH=$(mktemp -d)
