@@ -82,7 +82,6 @@ echo "[INFO] Initialized VIM"
 cp -r "$USER_HOME/.vim" /root/.vim
 cp -r "$USER_HOME/.vimrc" /root/.vimrc
 cp -r "$USER_HOME/.bashrc" /root/.bashrc
-cp -r "$USER_HOME/.bash-config" /root/.bash-config
 
 echo "[INFO] Initialized vim and bashrc for root"
 
