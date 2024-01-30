@@ -1,5 +1,6 @@
 #!/bin/bash
 set -xe
+export NEEDRESTART_MODE=a
 
 # Mostly tested for Ubuntu since I don't use other OS'es
 # But doesn't contain as much OS-dependant stuff
@@ -78,6 +79,13 @@ wait
 
 echo "[INFO] Initialized VIM"
 
+cp -r "$USER_HOME/.vim" /root/.vim
+cp -r "$USER_HOME/.vimrc" /root/.vimrc
+cp -r "$USER_HOME/.bashrc" /root/.bashrc
+cp -r "$USER_HOME/.bash-config" /root/.bash-config
+
+echo "[INFO] Initialized vim and bashrc for root"
+
 ### CLEANUP ###
 
 echo "[INFO] Installing pip3 packages"
@@ -95,3 +103,6 @@ chmod 600 "$USER_HOME/.ssh/authorized_keys"
 echo "[SUCCESS] Cleanup OK"
 
 unset -f dl_file
+unset NEEDRESTART_MODE
+
+source "$USER_HOME/.bashrc"
