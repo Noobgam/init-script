@@ -33,6 +33,11 @@ USER_HOME="/home/$USER"
 MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip net-tools netcat lsof htop'
 GIT_PATH='https://github.com/Noobgam/init-script.git'
 
+# do I need this? This only happens in docker probably.
+ln -snf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+echo Europe/Berlin > /etc/timezone
+
+
 ONEDARK_REPO='https://raw.githubusercontent.com/joshdick/onedark.vim/master'
 
 if ! dpkg -s $MANDATORY_PKGS >/dev/null 2>&1; then

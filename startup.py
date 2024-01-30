@@ -16,18 +16,18 @@ def execute(cmd):
     return os.system(cmd)
 
 
-SAMPLE_NGINX_CONF = """server {
+SAMPLE_NGINX_CONF = """server {{
 
-    location / {
+    location / {{
         proxy_pass http://127.0.0.1:9001/;
-    }
+    }}
 
     server_name {domain};
 
     listen [::]:80 ipv6only=on;
     listen 80;
 
-}"""
+}}"""
 
 
 class Component:
@@ -161,9 +161,7 @@ if __name__ == "__main__":
     if install in "nN":
         exit(0)
     while True:
-        logger.info("Avaliable components:")
-        for component in ALL_COMPONENTS:
-            logger.info(component.name)
+        logger.info(f"Avaliable components: {', '.join([component.name for component in ALL_COMPONENTS])}")
         install = input("What would you like to install?\n")
         parsed = list(map(lambda x: x.strip(), install.split(",")))
         logger.info(parsed)
