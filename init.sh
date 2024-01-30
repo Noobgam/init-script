@@ -17,12 +17,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-set -e
-
-
-apt-get update
-#apt-get upgrade -y
-
 USER='noobgam'
 
 ret=0
