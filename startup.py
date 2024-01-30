@@ -68,7 +68,7 @@ class NginxDomain(Component):
 
     def run(self):
         execute("systemctl reload nginx")
-        execute(f"certbot --nginx {self.domain}")
+        execute(f"certbot --nginx -d {self.domain}")
 
     def descr(self):
         return """Bootstraps nginx + asks you for your domain to obtain the certificate from certbot"""
