@@ -3,11 +3,18 @@ import os
 import shutil
 import sys
 
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    level=logging.DEBUG,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 logger = logging.getLogger()
+
 
 def execute(cmd):
     logger.info("Executing " + cmd)
     return os.system(cmd)
+
 
 SAMPLE_NGINX_CONF = """server {
 
@@ -51,20 +58,16 @@ class NginxDomain(Component):
         Component.__init__(self, "NginxDomain")
 
     def dep_pkgs(self):
-        return [
-            "certbot",
-            "python3-certbot-nginx",
-            "nginx"
-        ]
+        return ["certbot", "python3-certbot-nginx", "nginx"]
 
     def install(self):
         Component.install(self)
         self.domain = self.get_input("Insert your fqdn")
-        with open('/etc/nginx/sites-enabled/default', 'w') as f:
+        with open("/etc/nginx/sites-enabled/default", "w") as f:
             f.write(SAMPLE_NGINX_CONF.format(domain=self.domain))
 
     def run(self):
-        execute('systemctl reload nginx')
+        execute("systemctl reload nginx")
         execute(f"certbot --nginx {self.domain}")
 
     def descr(self):

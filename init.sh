@@ -66,7 +66,7 @@ mkdir -p "$USER_HOME/.vim/autoload"
 
 mv "$CLONED_PATH"/.vimrc "$USER_HOME"
 
-dl_file "$ONEDARK_REPO'/colors/onedark.vim" "$USER_HOME/.vim/colors/onedark.vim"
+dl_file "$ONEDARK_REPO/colors/onedark.vim" "$USER_HOME/.vim/colors/onedark.vim"
 dl_file "$ONEDARK_REPO/autoload/onedark.vim" "$USER_HOME/.vim/autoload/onedark.vim"
 # waits for git clone vim-polyglot
 wait
