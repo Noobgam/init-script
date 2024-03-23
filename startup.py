@@ -90,6 +90,8 @@ class Docker(Component):
     def install(self):
         Component.install(self)
         execute("curl -sSL https://get.docker.com | sh")
+        # add noobgam to docker group for convenience
+        execute("usermod -aG docker noobgam")
 
     def run(self):
         pass
