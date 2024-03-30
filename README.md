@@ -1,7 +1,7 @@
 ## init-script
 
 ```
-TMPFILE=`mktemp` && apt update && apt install curl sudo -y && curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh > "$TMPFILE" && sudo bash "$TMPFILE"
+export NEEDRESTART_MODE=a && TMPFILE=`mktemp` && apt update && apt install curl sudo -y && curl -s https://raw.githubusercontent.com/Noobgam/init-script/master/init.sh > "$TMPFILE" && sudo bash "$TMPFILE"
 ```
 
 # content
