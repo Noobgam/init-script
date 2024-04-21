@@ -101,6 +101,28 @@ class Docker(Component):
 Docker container engine, allows development of portable & scalable apps"""
 
 
+class AWSCLI(Component):
+    def __init__(self):
+        Component.__init__(self, "AWSCLI")
+
+    def dep_pkgs(self):
+        return ["curl", "python3-pip", "unzip"]
+
+    def install(self):
+        Component.install(self)
+        execute("curl -sSL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip")
+        execute("unzip awscliv2.zip")
+        execute("./aws/install")
+        execute("rm -rf awscliv2.zip aws")
+
+    def run(self):
+        # Optionally configure the AWS CLI
+        execute("aws configure")
+
+    def descr(self):
+        return "AWS Command Line Interface\nAllows managing AWS services directly from the terminal"
+
+
 class VNC(Component):
     """
     Installs tightvnc on host
@@ -150,7 +172,7 @@ class VNC(Component):
 Used to connect to remote desktop, via non-ssh way"""
 
 
-ALL_COMPONENTS = [Docker(), NginxDomain(), VNC()]
+ALL_COMPONENTS = [Docker(), NginxDomain(), VNC(), AWSCLI()]
 
 if __name__ == "__main__":
     if os.getuid() != 0:
