@@ -3,8 +3,6 @@ import os
 import shutil
 import sys
 
-workdir: str = ""
-
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
     level=logging.DEBUG,
