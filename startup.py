@@ -3,6 +3,8 @@ import os
 import shutil
 import sys
 
+workdir: str = ""
+
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
     level=logging.DEBUG,
@@ -116,11 +118,54 @@ class AWSCLI(Component):
         execute("rm -rf awscliv2.zip aws")
 
     def run(self):
-        # Optionally configure the AWS CLI
-        execute("aws configure")
+        execute("sudo -u noobgam aws configure")
 
     def descr(self):
         return "AWS Command Line Interface\nAllows managing AWS services directly from the terminal"
+
+
+class NodeExporter(Component):
+    def __init__(self):
+        Component.__init__(self, "NodeExporter")
+
+    def dep_pkgs(self):
+        return ["wget", "tar"]
+
+    def install(self):
+        Component.install(self)
+        execute("wget https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz")
+        execute("tar -xvf node_exporter-1.8.0.linux-amd64.tar.gz")
+        execute("mv node_exporter-1.8.0.linux-amd64/node_exporter /bin/")
+        execute("rm -rf node_exporter-1.8.0.linux-amd64.tar.gz node_exporter-1.8.0.linux-amd64")
+
+    def setup_service(self):
+        service_content = f"""\
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=always
+ExecStart=/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+"""
+        with open("/etc/systemd/system/node_exporter.service", "w") as f:
+            f.write(service_content)
+
+    def run(self):
+        self.setup_service()
+        execute("systemctl daemon-reload")
+        execute("systemctl enable node_exporter")
+        execute("systemctl start node_exporter")
+
+    def descr(self):
+        return "Node exporter setup"
 
 
 class VNC(Component):
