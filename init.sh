@@ -53,7 +53,7 @@ echo "[INFO] Checking out projects"
 mkdir -p "$USER_HOME/.vim/pack/default/start"
 git clone 'https://github.com/sheerun/vim-polyglot' "$USER_HOME/.vim/pack/default/start/vim-polyglot" >/dev/null 2>&1 &
 
-git clone "$GIT_PATH" "$CLONED_PATH" --branch dev >/dev/null 2>&1
+git clone "$GIT_PATH" "$CLONED_PATH" >/dev/null 2>&1
 
 ### INITIALIZE USER ###
 
