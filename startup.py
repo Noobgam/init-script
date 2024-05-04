@@ -135,32 +135,10 @@ class NodeExporter(Component):
         execute("tar -xvf node_exporter-1.8.0.linux-amd64.tar.gz")
         execute("mv node_exporter-1.8.0.linux-amd64/node_exporter /bin/")
         execute("rm -rf node_exporter-1.8.0.linux-amd64.tar.gz node_exporter-1.8.0.linux-amd64")
-
-    def setup_service(self):
-        service_content = f"""\
-[Unit]
-Description=Node Exporter
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-User=root
-Group=root
-Type=simple
-Restart=always
-ExecStart=/bin/node_exporter
-
-[Install]
-WantedBy=multi-user.target
-"""
-        with open("/etc/systemd/system/node_exporter.service", "w") as f:
-            f.write(service_content)
+        execute('(crontab -l ; echo "@reboot /bin/node_exporter >/dev/null 2>&1") | crontab -')
 
     def run(self):
-        self.setup_service()
-        execute("systemctl daemon-reload")
-        execute("systemctl enable node_exporter")
-        execute("systemctl start node_exporter")
+        execute('/bin/node_exporter >/dev/null 2>&1 & disown')
 
     def descr(self):
         return "Node exporter setup"
