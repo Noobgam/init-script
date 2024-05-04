@@ -217,7 +217,7 @@ class VNC(Component):
 Used to connect to remote desktop, via non-ssh way"""
 
 
-ALL_COMPONENTS = [Docker(), NginxDomain(), VNC(), AWSCLI()]
+ALL_COMPONENTS = [Docker(), NginxDomain(), VNC(), AWSCLI(), NodeExporter()]
 
 if __name__ == "__main__":
     if os.getuid() != 0:
