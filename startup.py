@@ -127,7 +127,7 @@ class NodeExporter(Component):
         Component.__init__(self, "NodeExporter")
 
     def dep_pkgs(self):
-        return ["wget", "tar"]
+        return ["wget", "tar", "cron"]
 
     def install(self):
         Component.install(self)
@@ -138,7 +138,7 @@ class NodeExporter(Component):
         execute('(crontab -l ; echo "@reboot /bin/node_exporter >/dev/null 2>&1") | crontab -')
 
     def run(self):
-        execute('/bin/node_exporter >/dev/null 2>&1 & disown')
+        execute('/bin/node_exporter >/dev/null 2>&1 &')
 
     def descr(self):
         return "Node exporter setup"
