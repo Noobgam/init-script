@@ -31,7 +31,7 @@ fi
 unset ret
 
 USER_HOME="/home/$USER"
-MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip net-tools netcat lsof htop'
+MANDATORY_PKGS='git python3 wget vim apt-transport-https ca-certificates curl python3-pip net-tools netcat-openbsd lsof htop'
 GIT_PATH='https://github.com/Noobgam/init-script.git'
 
 # do I need this? This only happens in docker probably.
