@@ -89,7 +89,7 @@ echo "[INFO] Initialized vim and bashrc for root"
 
 echo "[INFO] Installing pip3 packages"
 
-apt-get install python3-ps-mem -y
+pip3 install --break-system-packages ps_mem
 
 echo "[INFO] Running interactive startup procedure"
 
