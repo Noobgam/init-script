@@ -297,11 +297,6 @@ _update_titlebar () {
     echo -ne "\033]0;${USER}@${PROMPT_HOSTNAME%%.*}:${PWD/$HOME/~}\007"
 }
 
-# If we're in a shell within a shell, print out $SHLVL
-_print_subshell_value () {
-    [ "${SHLVL}" -gt 1 ] && echo -ne "${txtylw}[${txtwht}${SHLVL}${txtylw}]${txtwht} "
-}
-
 # prompt commands, to change how the current working directory is displayed
 long_prompt_pwd () { PROMPT_CWD="\w"; set_prompt; }
 short_prompt_pwd () { PROMPT_CWD="\W"; set_prompt; }
@@ -366,8 +361,6 @@ set_prompt_command ()
 
     [ "${LINE_ENABLED}" == "1" ] && PROMPT_COMMAND="${PROMPT_COMMAND} _draw_line; "
     [ "${GIT_ENABLED}" == "1" ] && PROMPT_COMMAND="${PROMPT_COMMAND} _get_git_branch; "
-
-    PROMPT_COMMAND="${PROMPT_COMMAND} _print_subshell_value; "
 }
 
 # Function set the prompt.  Format:
